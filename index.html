@@ -30,11 +30,11 @@
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <img
-          class="hero-image"
-          src="media/Character_Select.png"
-          alt="ProjectRush character selection screen"
-        >
+        <div class="hero-lineup" aria-label="ProjectRush character select lineup">
+          <img class="hero-character hero-character-primary" src="media/Character_Select.png" alt="School uniform character">
+          <img class="hero-character" src="media/Character_Select0.png" alt="Black outfit character">
+          <img class="hero-character" src="media/Character_Select1.png" alt="White jacket character">
+        </div>
         <div class="hero-shade" aria-hidden="true"></div>
 
         <div class="hero-content">
@@ -145,7 +145,7 @@
             <h3 id="character-select-title">Character Select</h3>
             <p>Pick a character before playing.</p>
           </div>
-          <div class="image-grid two-up">
+          <div class="image-grid">
             <button class="image-card" type="button" data-lightbox-src="media/Character_Select.png" data-lightbox-caption="Character Select">
               <img src="media/Character_Select.png" alt="Character select screenshot" loading="lazy">
               <span>Character Select</span>
@@ -153,6 +153,10 @@
             <button class="image-card" type="button" data-lightbox-src="media/Character_Select0.png" data-lightbox-caption="Character Select 2">
               <img src="media/Character_Select0.png" alt="Second character select screenshot" loading="lazy">
               <span>Character Select 2</span>
+            </button>
+            <button class="image-card" type="button" data-lightbox-src="media/Character_Select1.png" data-lightbox-caption="Character Select 3">
+              <img src="media/Character_Select1.png" alt="Third character select screenshot" loading="lazy">
+              <span>Character Select 3</span>
             </button>
           </div>
         </section>

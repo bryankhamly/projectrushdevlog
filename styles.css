@@ -129,23 +129,50 @@ button {
   position: relative;
   min-height: 92vh;
   overflow: hidden;
-  background: #101216;
+  background:
+    linear-gradient(135deg, rgba(75, 215, 255, 0.16), rgba(255, 93, 125, 0.08) 38%, transparent 66%),
+    #101216;
 }
 
-.hero-image {
+.hero-lineup {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: clamp(5rem, 9vh, 6rem);
+  right: clamp(1rem, 4vw, 4.5rem);
+  bottom: clamp(2rem, 6vh, 4rem);
+  display: flex;
+  width: min(42vw, 48rem);
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(0.9rem, 1.4vw, 1.8rem);
+  overflow: hidden;
+}
+
+.hero-character {
+  width: 0;
+  min-width: 0;
+  flex: 1 1 0%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center bottom;
+}
+
+.hero-character-primary {
+  flex-grow: 1.16;
+}
+
+@media (min-width: 1500px) {
+  .hero-lineup {
+    right: clamp(1.25rem, 2.5vw, 4rem);
+    width: min(52vw, 72rem);
+    gap: clamp(1.5rem, 2vw, 3rem);
+  }
 }
 
 .hero-shade {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(15, 17, 21, 0.92), rgba(15, 17, 21, 0.62) 48%, rgba(15, 17, 21, 0.16)),
+    linear-gradient(90deg, rgba(15, 17, 21, 0.96), rgba(15, 17, 21, 0.78) 38%, rgba(15, 17, 21, 0.28) 56%, rgba(15, 17, 21, 0.08) 82%),
     linear-gradient(0deg, var(--bg), transparent 34%);
 }
 
@@ -170,12 +197,12 @@ button {
 h1 {
   max-width: 8ch;
   margin-top: 0.7rem;
-  font-size: clamp(4rem, 13vw, 9rem);
+  font-size: clamp(4rem, 8vw, 7rem);
   line-height: 0.88;
 }
 
 .hero-lede {
-  max-width: 720px;
+  max-width: 620px;
   margin-top: 1.25rem;
   color: #f0e7dd;
   font-size: clamp(1.08rem, 2vw, 1.45rem);
@@ -503,6 +530,20 @@ h1 {
   }
 }
 
+@media (max-width: 1100px) {
+  .hero-content {
+    max-width: 560px;
+  }
+
+  .hero-lede {
+    max-width: 520px;
+  }
+
+  h1 {
+    font-size: clamp(4rem, 7.4vw, 5.6rem);
+  }
+}
+
 @media (max-width: 720px) {
   .site-header {
     position: sticky;
@@ -533,8 +574,24 @@ h1 {
       linear-gradient(90deg, rgba(15, 17, 21, 0.82), rgba(15, 17, 21, 0.2));
   }
 
+  .hero-lineup {
+    top: 5.25rem;
+    right: 0;
+    bottom: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.25rem;
+    width: 100%;
+    height: 19rem;
+    opacity: 0.64;
+  }
+
+  .hero-character {
+    width: 100%;
+  }
+
   h1 {
-    font-size: clamp(3.3rem, 18vw, 5.6rem);
+    font-size: clamp(3rem, 13.5vw, 4rem);
   }
 
   .section-heading,
