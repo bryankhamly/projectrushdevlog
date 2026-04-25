@@ -154,10 +154,21 @@ button {
   height: 100%;
   object-fit: cover;
   object-position: center bottom;
+  background: #9ba9bf;
+  transform: translateY(1rem);
+  opacity: 0;
+  transition:
+    opacity 780ms ease,
+    transform 780ms cubic-bezier(0.18, 0.8, 0.28, 1);
 }
 
 .hero-character-primary {
   flex-grow: 1.16;
+}
+
+.hero-character.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (min-width: 1500px) {
@@ -165,6 +176,14 @@ button {
     right: clamp(1.25rem, 2.5vw, 4rem);
     width: min(52vw, 72rem);
     gap: clamp(1.5rem, 2vw, 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-character {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }
 

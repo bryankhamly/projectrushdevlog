@@ -4,6 +4,7 @@ const lightboxImage = document.querySelector("[data-lightbox-image]");
 const lightboxCaption = document.querySelector("[data-lightbox-caption]");
 const closeButton = document.querySelector("[data-lightbox-close]");
 const screenshotButtons = Array.from(document.querySelectorAll("[data-lightbox-src]"));
+const heroCharacters = Array.from(document.querySelectorAll(".hero-character"));
 
 function setHeaderState() {
   header.classList.toggle("scrolled", window.scrollY > 24);
@@ -31,6 +32,11 @@ window.addEventListener("scroll", setHeaderState, { passive: true });
 
 screenshotButtons.forEach((button) => {
   button.addEventListener("click", () => openLightbox(button));
+});
+
+heroCharacters.forEach((character, index) => {
+  const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : index * 360;
+  window.setTimeout(() => character.classList.add("is-visible"), delay);
 });
 
 closeButton.addEventListener("click", closeLightbox);
