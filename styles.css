@@ -140,10 +140,10 @@ button {
   right: clamp(0.25rem, 1vw, 1.5rem);
   bottom: clamp(3rem, 9vh, 6rem);
   display: flex;
-  width: min(76vw, 100rem);
+  width: min(88vw, 124rem);
   align-items: stretch;
   justify-content: center;
-  gap: clamp(1.4rem, 2.2vw, 3.2rem);
+  gap: clamp(0.5rem, 1vw, 1.4rem);
   overflow: hidden;
 }
 
@@ -173,8 +173,8 @@ button {
 @media (min-width: 1500px) {
   .hero-lineup {
     right: clamp(0.5rem, 1.25vw, 2rem);
-    width: min(80vw, 118rem);
-    gap: clamp(2rem, 2.8vw, 4.4rem);
+    width: min(92vw, 140rem);
+    gap: clamp(0.8rem, 1.4vw, 2rem);
   }
 }
 
@@ -190,8 +190,8 @@ button {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(15, 17, 21, 0.96), rgba(15, 17, 21, 0.78) 38%, rgba(15, 17, 21, 0.28) 56%, rgba(15, 17, 21, 0.08) 82%),
-    linear-gradient(0deg, var(--bg), transparent 34%);
+    linear-gradient(90deg, rgba(15, 17, 21, 0.92), rgba(15, 17, 21, 0.5) 38%, rgba(15, 17, 21, 0.1) 56%, rgba(15, 17, 21, 0) 78%),
+    linear-gradient(0deg, var(--bg), transparent 28%);
 }
 
 .hero-content {
@@ -588,8 +588,8 @@ h1 {
 
   .hero-shade {
     background:
-      linear-gradient(0deg, var(--bg), rgba(15, 17, 21, 0.5)),
-      linear-gradient(90deg, rgba(15, 17, 21, 0.82), rgba(15, 17, 21, 0.2));
+      linear-gradient(0deg, var(--bg), rgba(15, 17, 21, 0.32)),
+      linear-gradient(90deg, rgba(15, 17, 21, 0.6), rgba(15, 17, 21, 0.1));
   }
 
   .hero-lineup {
@@ -597,11 +597,11 @@ h1 {
     right: 0;
     bottom: auto;
     display: grid;
-    grid-template-columns: repeat(5, minmax(8.5rem, 1fr));
-    gap: 0.45rem;
+    grid-template-columns: repeat(6, minmax(7rem, 1fr));
+    gap: 0.3rem;
     width: 100%;
     height: 19rem;
-    opacity: 0.64;
+    opacity: 0.85;
     overflow-x: hidden;
   }
 
