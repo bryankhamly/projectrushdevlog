@@ -1,0 +1,13 @@
+[Final Prototype]
+
+1 Boss - Will be a dragon raid [not done]
+1 Tutorial Boss - Alpha Wolf [done]
+1 Regular Mob - Regular Wolf [done]
+
+2-3 Playable Test Classes
+
+Fighter [done - a simple melee character]
+??? - to be designed
+??? - to be designed
+
+Sound Effects and Music Pass (1 bgm?) [not done]
