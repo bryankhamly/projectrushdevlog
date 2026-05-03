@@ -1,8 +1,8 @@
 const header = document.querySelector("[data-header]");
 const lightbox = document.querySelector("[data-lightbox]");
-const lightboxImage = document.querySelector("[data-lightbox-image]");
-const lightboxCaption = document.querySelector("[data-lightbox-caption]");
-const closeButton = document.querySelector("[data-lightbox-close]");
+const lightboxImage = lightbox.querySelector("[data-lightbox-image]");
+const lightboxCaption = lightbox.querySelector("[data-lightbox-caption]");
+const closeButton = lightbox.querySelector("[data-lightbox-close]");
 const screenshotButtons = Array.from(document.querySelectorAll("[data-lightbox-src]"));
 const heroCharacters = Array.from(document.querySelectorAll(".hero-character"));
 
