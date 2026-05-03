@@ -8,7 +8,6 @@
       content="ProjectRush showcase with anime-inspired character creation, co-op play, authoring workspace screenshots, and prototype gameplay."
     >
     <title>ProjectRush Showcase</title>
-    <link rel="preload" as="image" href="media/Character_Creation1.png" fetchpriority="high">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -106,15 +105,7 @@
           </div>
           <div class="image-grid">
             <button class="image-card" type="button" data-lightbox-src="media/Character_Creation1.png" data-lightbox-caption="Character Creation 1">
-              <img
-                src="media/Character_Creation1.png"
-                alt="Character creation screenshot 1"
-                width="960"
-                height="544"
-                loading="eager"
-                decoding="sync"
-                fetchpriority="high"
-              >
+              <img src="media/Character_Creation1.png" alt="Character creation screenshot 1" loading="lazy">
               <span>Character Creation 1</span>
             </button>
             <button class="image-card" type="button" data-lightbox-src="media/Character_Creation2.png" data-lightbox-caption="Character Creation 2">
