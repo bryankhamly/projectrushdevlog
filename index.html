@@ -1,240 +1,205 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="ProjectRush showcase with anime-inspired character creation, co-op play, authoring workspace screenshots, and prototype gameplay."
+      content="ProjectRush — anime-inspired co-op boss rush. Character creation, authoring workspaces, prototype gameplay."
     >
-    <title>ProjectRush Showcase</title>
+    <title>ProjectRush · Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <header class="site-header" data-header>
-      <a class="brand" href="#top" aria-label="ProjectRush home">
-        <span class="brand-mark" aria-hidden="true">PR</span>
-        <span>
-          <strong>ProjectRush</strong>
-          <small>Showcase</small>
-        </span>
-      </a>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="#top" aria-label="ProjectRush home">
+          <span class="brand-mark" aria-hidden="true">PR</span>
+          <span class="brand-name">
+            <strong>ProjectRush</strong>
+            <small>Showcase</small>
+          </span>
+        </a>
 
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="#overview">Overview</a>
-        <a href="#screenshots">Screenshots</a>
-        <a href="#demo">Prototype Gameplay</a>
-        <a href="plan.html">Plan</a>
-        <a href="join.html">Hiring</a>
-      </nav>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a class="nav-link" href="#overview">Overview</a>
+          <a class="nav-link" href="#screenshots">Screenshots</a>
+          <a class="nav-link" href="#demo">Gameplay</a>
+          <a class="nav-link" href="plan.html">Plan</a>
+          <a class="nav-link" href="join.html">Hiring</a>
+        </nav>
+      </div>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
+        <div class="vanta-bg" data-vanta="net"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+
         <div class="hero-lineup" aria-label="ProjectRush character select lineup">
-          <img class="hero-character hero-character-primary" src="media/Character_Select1.png" alt="White jacket character">
-          <img class="hero-character" src="media/Character_Select3.png" alt="Pink dress character">
-          <img class="hero-character" src="media/Character_Select5.png" alt="Character lineup addition">
-          <img class="hero-character" src="media/Character_Select0.png" alt="Black outfit character">
-          <img class="hero-character" src="media/Character_Select4.png" alt="Red outfit character">
-          <img class="hero-character" src="media/Character_Select.png" alt="School uniform character">
+          <img class="hero-character is-primary" src="media/Character_Select1.png" alt="White jacket character" fetchpriority="high" decoding="async">
+          <img class="hero-character" src="media/Character_Select3.png" alt="Pink dress character" decoding="async" fetchpriority="low">
+          <img class="hero-character" src="media/Character_Select5.png" alt="Character lineup addition" decoding="async" fetchpriority="low">
+          <img class="hero-character" src="media/Character_Select0.png" alt="Black outfit character" decoding="async" fetchpriority="low">
+          <img class="hero-character" src="media/Character_Select4.png" alt="Red outfit character" decoding="async" fetchpriority="low">
+          <img class="hero-character" src="media/Character_Select.png" alt="School uniform character" decoding="async" fetchpriority="low">
         </div>
-        <div class="hero-shade" aria-hidden="true"></div>
 
         <div class="hero-content">
-          <p class="eyebrow">Anime-inspired co-op action RPG</p>
-          <h1 id="hero-title">ProjectRush</h1>
+          <span class="eyebrow">Anime-inspired co-op action RPG</span>
+          <h1 id="hero-title" class="hero-title">ProjectRush</h1>
           <p class="hero-lede">
-            A modern fantasy anime boss rush action game where you can solo or party up to defeat bosses. This project is currently in development and is looking for funding. Gameplay inspired by Lost Ark, FF14 and Hades.
+            A modern fantasy anime boss rush where you solo or party up to take down bosses. Currently in development and looking for funding. Inspired by Lost Ark, FF14, and Hades.
           </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="https://streamable.com/0mpy2m?src=player-page-share" target="_blank" rel="noreferrer">
-              Watch Prototype Gameplay
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://streamable.com/0mpy2m?src=player-page-share" target="_blank" rel="noreferrer">
+              ▶ Watch Prototype
             </a>
-            <a class="button secondary" href="#screenshots">View Screenshots</a>
+            <a class="btn btn-ghost" href="#screenshots">View Screenshots</a>
           </div>
         </div>
       </section>
 
-      <section id="overview" class="overview" aria-labelledby="overview-title">
-        <div class="section-heading">
-          <p class="eyebrow">At a glance</p>
-          <h2 id="overview-title">A simple look at what ProjectRush shows.</h2>
-        </div>
+      <section id="overview" class="section section-bg" aria-labelledby="overview-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div class="section-eyebrow-stack" data-reveal>
+              <span class="eyebrow">At a glance</span>
+            </div>
+            <h2 id="overview-title" class="section-title" data-reveal>A simple look at what ProjectRush shows.</h2>
+          </div>
 
-        <div class="overview-grid">
-          <article>
-            <span>01</span>
-            <h3>Character Creation</h3>
-            <p>Build an anime-style character and preview different looks.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>1-8 Player Co-op</h3>
-            <p>Designed around playing together with a small party or a bigger group.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Authoring Workspaces</h3>
-            <p>Behind-the-scenes tools for making characters, abilities, and enemies.</p>
-          </article>
-          <article>
-            <span>04</span>
-            <h3>Prototype Gameplay</h3>
-            <p>A short gameplay video shows the game direction in motion.</p>
-          </article>
+          <div class="grid-4">
+            <article class="glass" data-reveal style="--reveal-delay: 0ms;">
+              <div class="glass-body">
+                <span class="tile-num">01</span>
+                <h3 class="tile-title">Character Creation</h3>
+                <p class="tile-text">Build an anime-style character and preview different looks.</p>
+              </div>
+            </article>
+            <article class="glass" data-reveal style="--reveal-delay: 80ms;">
+              <div class="glass-body">
+                <span class="tile-num">02</span>
+                <h3 class="tile-title">1–8 Player Co-op</h3>
+                <p class="tile-text">Designed around playing together with a small party or a bigger group.</p>
+              </div>
+            </article>
+            <article class="glass" data-reveal style="--reveal-delay: 160ms;">
+              <div class="glass-body">
+                <span class="tile-num">03</span>
+                <h3 class="tile-title">Authoring Workspaces</h3>
+                <p class="tile-text">Behind-the-scenes tools for making characters, abilities, and enemies.</p>
+              </div>
+            </article>
+            <article class="glass" data-reveal style="--reveal-delay: 240ms;">
+              <div class="glass-body">
+                <span class="tile-num">04</span>
+                <h3 class="tile-title">Prototype Gameplay</h3>
+                <p class="tile-text">A short gameplay video shows the game direction in motion.</p>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section id="screenshots" class="screenshots" aria-labelledby="screenshots-title">
-        <div class="section-heading">
-          <p class="eyebrow">Screenshot gallery</p>
-          <h2 id="screenshots-title">Browse each category.</h2>
+      <section id="screenshots" class="section section-bg" aria-labelledby="screenshots-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div class="section-eyebrow-stack" data-reveal>
+              <span class="eyebrow">Screenshot gallery</span>
+            </div>
+            <h2 id="screenshots-title" class="section-title" data-reveal>Browse each category.</h2>
+          </div>
+
+          <div data-reveal>
+            <ul class="tabs" role="tablist" aria-label="Screenshot categories">
+              <li><button class="tab" type="button" role="tab" aria-selected="true" aria-controls="panel-cc" data-tab="cc">Character Creation</button></li>
+              <li><button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-cs" data-tab="cs">Character Select</button></li>
+              <li><button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-aw" data-tab="aw">Authoring Workspaces</button></li>
+            </ul>
+
+            <div id="panel-cc" class="tab-panel is-active" role="tabpanel">
+              <div class="grid-3">
+                <a class="shot" href="media/Character_Creation1.png" data-lightbox-caption="Character Creation 1"><img class="shot-img" src="media/Character_Creation1.png" alt="Character creation 1" loading="lazy"><span class="shot-cap">Character Creation 1</span></a>
+                <a class="shot" href="media/Character_Creation2.png" data-lightbox-caption="Character Creation 2"><img class="shot-img" src="media/Character_Creation2.png" alt="Character creation 2" loading="lazy"><span class="shot-cap">Character Creation 2</span></a>
+                <a class="shot" href="media/Character_Creation3.png" data-lightbox-caption="Character Creation 3"><img class="shot-img" src="media/Character_Creation3.png" alt="Character creation 3" loading="lazy"><span class="shot-cap">Character Creation 3</span></a>
+                <a class="shot" href="media/Character_Creation4.png" data-lightbox-caption="Character Creation 4"><img class="shot-img" src="media/Character_Creation4.png" alt="Character creation 4" loading="lazy"><span class="shot-cap">Character Creation 4</span></a>
+                <a class="shot" href="media/Character_Creation5.png" data-lightbox-caption="Character Creation 5"><img class="shot-img" src="media/Character_Creation5.png" alt="Character creation 5" loading="lazy"><span class="shot-cap">Character Creation 5</span></a>
+                <a class="shot" href="media/Character_Creation6.png" data-lightbox-caption="Character Creation 6"><img class="shot-img" src="media/Character_Creation6.png" alt="Character creation 6" loading="lazy"><span class="shot-cap">Character Creation 6</span></a>
+                <a class="shot" href="media/Character_Creation7.png" data-lightbox-caption="Character Creation 7"><img class="shot-img" src="media/Character_Creation7.png" alt="Character creation 7" loading="lazy"><span class="shot-cap">Character Creation 7</span></a>
+              </div>
+            </div>
+
+            <div id="panel-cs" class="tab-panel" role="tabpanel">
+              <div class="grid-3">
+                <a class="shot" href="media/Character_Select.png" data-lightbox-caption="Character Select"><img class="shot-img" src="media/Character_Select.png" alt="Character select" loading="lazy"><span class="shot-cap">Character Select</span></a>
+                <a class="shot" href="media/Character_Select0.png" data-lightbox-caption="Character Select 2"><img class="shot-img" src="media/Character_Select0.png" alt="Second character select" loading="lazy"><span class="shot-cap">Character Select 2</span></a>
+                <a class="shot" href="media/Character_Select1.png" data-lightbox-caption="Character Select 3"><img class="shot-img" src="media/Character_Select1.png" alt="Third character select" loading="lazy"><span class="shot-cap">Character Select 3</span></a>
+                <a class="shot" href="media/Character_Select3.png" data-lightbox-caption="Character Select 4"><img class="shot-img" src="media/Character_Select3.png" alt="Fourth character select" loading="lazy"><span class="shot-cap">Character Select 4</span></a>
+                <a class="shot" href="media/Character_Select4.png" data-lightbox-caption="Character Select 5"><img class="shot-img" src="media/Character_Select4.png" alt="Fifth character select" loading="lazy"><span class="shot-cap">Character Select 5</span></a>
+                <a class="shot" href="media/Character_Select5.png" data-lightbox-caption="Character Select 6"><img class="shot-img" src="media/Character_Select5.png" alt="Sixth character select" loading="lazy"><span class="shot-cap">Character Select 6</span></a>
+              </div>
+            </div>
+
+            <div id="panel-aw" class="tab-panel" role="tabpanel">
+              <div class="grid-2">
+                <a class="shot" href="media/Avatar_Authoring.png" data-lightbox-caption="Avatar Tool"><img class="shot-img" src="media/Avatar_Authoring.png" alt="Avatar tool" loading="lazy"><span class="shot-cap">Avatar Tool</span></a>
+                <a class="shot" href="media/Player_Ability_Authoring.png" data-lightbox-caption="Player Ability Tool"><img class="shot-img" src="media/Player_Ability_Authoring.png" alt="Player ability tool" loading="lazy"><span class="shot-cap">Player Ability Tool</span></a>
+                <a class="shot" href="media/Player_Ability_Authoring1.png" data-lightbox-caption="Player Ability Tool 2"><img class="shot-img" src="media/Player_Ability_Authoring1.png" alt="Second player ability tool" loading="lazy"><span class="shot-cap">Player Ability Tool 2</span></a>
+                <a class="shot" href="media/Enemy_Node_Graph.png" data-lightbox-caption="Enemy Setup Graph"><img class="shot-img" src="media/Enemy_Node_Graph.png" alt="Enemy setup graph" loading="lazy"><span class="shot-cap">Enemy Setup Graph</span></a>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div class="gallery-jump" aria-label="Screenshot categories">
-          <a href="#character-creation">Character Creation</a>
-          <a href="#character-select">Character Select</a>
-          <a href="#authoring-workspaces">Authoring Workspaces</a>
-        </div>
-
-        <section id="character-creation" class="gallery-category" aria-labelledby="character-creation-title">
-          <div class="category-heading">
-            <h3 id="character-creation-title">Character Creation</h3>
-            <p>Anime-style character creation screens.</p>
-          </div>
-          <div class="image-grid">
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Creation1.png" data-lightbox-caption="Character Creation 1">
-              <img src="media/Character_Creation1.png" alt="Character creation screenshot 1" loading="lazy">
-              <span>Character Creation 1</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Creation2.png" data-lightbox-caption="Character Creation 2">
-              <img src="media/Character_Creation2.png" alt="Character creation screenshot 2" loading="lazy">
-              <span>Character Creation 2</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Creation3.png" data-lightbox-caption="Character Creation 3">
-              <img src="media/Character_Creation3.png" alt="Character creation screenshot 3" loading="lazy">
-              <span>Character Creation 3</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Creation4.png" data-lightbox-caption="Character Creation 4">
-              <img src="media/Character_Creation4.png" alt="Character creation screenshot 4" loading="lazy">
-              <span>Character Creation 4</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Creation5.png" data-lightbox-caption="Character Creation 5">
-              <img src="media/Character_Creation5.png" alt="Character creation screenshot 5" loading="lazy">
-              <span>Character Creation 5</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Creation6.png" data-lightbox-caption="Character Creation 6">
-              <img src="media/Character_Creation6.png" alt="Character creation screenshot 6" loading="lazy">
-              <span>Character Creation 6</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Creation7.png" data-lightbox-caption="Character Creation 7">
-              <img src="media/Character_Creation7.png" alt="Character creation screenshot 7" loading="lazy">
-              <span>Character Creation 7</span>
-            </button>
-          </div>
-        </section>
-
-        <section id="character-select" class="gallery-category" aria-labelledby="character-select-title">
-          <div class="category-heading">
-            <h3 id="character-select-title">Character Select</h3>
-            <p>Pick a character before playing.</p>
-          </div>
-          <div class="image-grid">
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Select.png" data-lightbox-caption="Character Select">
-              <img src="media/Character_Select.png" alt="Character select screenshot" loading="lazy">
-              <span>Character Select</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Select0.png" data-lightbox-caption="Character Select 2">
-              <img src="media/Character_Select0.png" alt="Second character select screenshot" loading="lazy">
-              <span>Character Select 2</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Select1.png" data-lightbox-caption="Character Select 3">
-              <img src="media/Character_Select1.png" alt="Third character select screenshot" loading="lazy">
-              <span>Character Select 3</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Select3.png" data-lightbox-caption="Character Select 4">
-              <img src="media/Character_Select3.png" alt="Fourth character select screenshot" loading="lazy">
-              <span>Character Select 4</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Select4.png" data-lightbox-caption="Character Select 5">
-              <img src="media/Character_Select4.png" alt="Fifth character select screenshot" loading="lazy">
-              <span>Character Select 5</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Character_Select5.png" data-lightbox-caption="Character Select 6">
-              <img src="media/Character_Select5.png" alt="Sixth character select screenshot" loading="lazy">
-              <span>Character Select 6</span>
-            </button>
-          </div>
-        </section>
-
-        <section id="authoring-workspaces" class="gallery-category" aria-labelledby="authoring-title">
-          <div class="category-heading">
-            <h3 id="authoring-title">Authoring Workspaces</h3>
-            <p>Tools used to set up characters, player abilities, and enemies.</p>
-          </div>
-          <div class="image-grid">
-            <button class="image-card" type="button" data-lightbox-src="media/Avatar_Authoring.png" data-lightbox-caption="Avatar Tool">
-              <img src="media/Avatar_Authoring.png" alt="Avatar tool screenshot" loading="lazy">
-              <span>Avatar Tool</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Player_Ability_Authoring.png" data-lightbox-caption="Player Ability Tool">
-              <img src="media/Player_Ability_Authoring.png" alt="Player ability tool screenshot" loading="lazy">
-              <span>Player Ability Tool</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Player_Ability_Authoring1.png" data-lightbox-caption="Player Ability Tool 2">
-              <img src="media/Player_Ability_Authoring1.png" alt="Second player ability tool screenshot" loading="lazy">
-              <span>Player Ability Tool 2</span>
-            </button>
-            <button class="image-card" type="button" data-lightbox-src="media/Enemy_Node_Graph.png" data-lightbox-caption="Enemy Setup Graph">
-              <img src="media/Enemy_Node_Graph.png" alt="Enemy setup graph screenshot" loading="lazy">
-              <span>Enemy Setup Graph</span>
-            </button>
-          </div>
-        </section>
       </section>
 
-      <section id="demo" class="demo" aria-labelledby="demo-title">
-        <div class="demo-card">
-          <div class="demo-copy">
-            <p class="eyebrow">Prototype gameplay</p>
-            <h2 id="demo-title">Tutorial Basic Wolf Boss</h2>
-            <p>
-              A quick video look at the game direction.
-            </p>
-            <a class="button primary" href="https://streamable.com/0mpy2m?src=player-page-share" target="_blank" rel="noreferrer">
-              Open Video
-            </a>
-          </div>
-
-          <div class="demo-video">
-            <iframe
-              title="ProjectRush prototype gameplay"
-              src="https://streamable.com/e/0mpy2m?src=player-page-share"
-              allow="fullscreen; autoplay"
-              allowfullscreen
-            ></iframe>
+      <section id="demo" class="section section-bg" aria-labelledby="demo-title">
+        <div class="section-inner">
+          <div class="demo" data-reveal>
+            <div class="demo-copy">
+              <span class="eyebrow">Prototype gameplay</span>
+              <h2 id="demo-title" class="demo-title">Tutorial Wolf Boss</h2>
+              <p class="tile-text" style="margin-top:0;">A quick video look at the game direction.</p>
+              <div>
+                <a class="btn btn-primary" href="https://streamable.com/0mpy2m?src=player-page-share" target="_blank" rel="noreferrer">
+                  ⧉ Open Video
+                </a>
+              </div>
+            </div>
+            <div>
+              <iframe
+                class="demo-iframe"
+                title="ProjectRush prototype gameplay"
+                src="https://streamable.com/e/0mpy2m?src=player-page-share"
+                allow="fullscreen; autoplay"
+                allowfullscreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>ProjectRush Showcase</p>
-      <a href="#top">Back to top</a>
+    <footer class="footer">
+      <div class="footer-inner">
+        <p>ProjectRush · Showcase</p>
+        <a href="#top">↑ Back to top</a>
+      </div>
     </footer>
 
     <div class="lightbox" data-lightbox hidden>
-      <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close screenshot preview">Close</button>
+      <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close screenshot preview">✕</button>
       <figure>
         <img src="" alt="" data-lightbox-image>
         <figcaption data-lightbox-caption></figcaption>
       </figure>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
-
-
-

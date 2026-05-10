@@ -1,248 +1,132 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="ProjectRush is looking for passionate collaborators. See open roles and learn how to join the project.">
-    <title>Join Us &mdash; ProjectRush</title>
+    <title>Join · ProjectRush</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-      .join-hero {
-        min-height: 60vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 10rem clamp(1rem, 5vw, 4.5rem) clamp(3rem, 8vh, 5rem);
-        background:
-          linear-gradient(135deg, rgba(155, 128, 255, 0.18), rgba(75, 215, 255, 0.1) 50%, transparent),
-          var(--bg);
-      }
-
-      .join-hero h1 {
-        max-width: none;
-        font-size: clamp(3rem, 7vw, 5.5rem);
-        line-height: 1;
-      }
-
-      .roles-section {
-        padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 5vw, 4.5rem);
-      }
-
-      .roles-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.25rem;
-        max-width: 1180px;
-        margin: 2.5rem auto 0;
-      }
-
-      .role-card {
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--panel-solid);
-        padding: 1.8rem;
-        transition: border-color 160ms ease, transform 160ms ease;
-      }
-
-      .role-card:hover {
-        border-color: rgba(155, 128, 255, 0.6);
-        transform: translateY(-2px);
-      }
-
-      .role-tag {
-        display: inline-block;
-        padding: 0.25rem 0.65rem;
-        border-radius: 4px;
-        font-size: 0.72rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        margin-bottom: 0.9rem;
-      }
-
-      .role-tag.art { background: rgba(255, 93, 125, 0.2); color: var(--rose); }
-      .role-tag.tech { background: rgba(75, 215, 255, 0.18); color: var(--cyan); }
-      .role-tag.design { background: rgba(245, 200, 91, 0.18); color: var(--gold); }
-      .role-tag.audio { background: rgba(155, 128, 255, 0.18); color: var(--violet); }
-
-      .role-card h3 {
-        font-size: 1.35rem;
-      }
-
-      .roles-note {
-        max-width: 1180px;
-        margin: 0 auto;
-        border: 1px solid rgba(245, 200, 91, 0.34);
-        border-radius: var(--radius);
-        background:
-          linear-gradient(135deg, rgba(245, 200, 91, 0.1), rgba(255, 93, 125, 0.06)),
-          var(--panel-solid);
-        padding: 1.25rem 1.5rem;
-        display: flex;
-        gap: 1rem;
-        align-items: flex-start;
-      }
-
-      .roles-note .note-tag {
-        flex-shrink: 0;
-        padding: 0.25rem 0.65rem;
-        border-radius: 4px;
-        background: rgba(245, 200, 91, 0.18);
-        color: var(--gold);
-        font-size: 0.72rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-
-      .roles-note p {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.55;
-      }
-
-      .roles-note strong {
-        color: var(--text);
-      }
-
-      .contact-section {
-        padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 5vw, 4.5rem);
-      }
-
-      .contact-card {
-        max-width: 720px;
-        margin: 0 auto;
-        border: 1px solid rgba(155, 128, 255, 0.34);
-        border-radius: var(--radius);
-        background:
-          linear-gradient(135deg, rgba(155, 128, 255, 0.12), rgba(75, 215, 255, 0.08)),
-          var(--panel-solid);
-        padding: clamp(1.8rem, 4vw, 2.5rem);
-        box-shadow: var(--shadow);
-        text-align: center;
-      }
-
-      .contact-card h2 {
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
-        line-height: 1.1;
-      }
-
-      .contact-card p {
-        color: var(--muted);
-        line-height: 1.6;
-        margin-top: 0.8rem;
-      }
-
-      .contact-methods {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.8rem;
-        margin-top: 1.6rem;
-      }
-
-      @media (max-width: 720px) {
-        .join-hero {
-          min-height: auto;
-          padding-top: 7rem;
-        }
-
-        .roles-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
   </head>
   <body>
-    <header class="site-header" data-header>
-      <a class="brand" href="index.html" aria-label="ProjectRush home">
-        <span class="brand-mark" aria-hidden="true">PR</span>
-        <span>
-          <strong>ProjectRush</strong>
-          <small>Showcase</small>
-        </span>
-      </a>
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="index.html" aria-label="ProjectRush home">
+          <span class="brand-mark" aria-hidden="true">PR</span>
+          <span class="brand-name">
+            <strong>ProjectRush</strong>
+            <small>Showcase</small>
+          </span>
+        </a>
 
-      <nav class="site-nav" aria-label="Main navigation">
-        <a href="index.html">Home</a>
-        <a href="plan.html">Plan</a>
-        <a href="#roles">Hiring</a>
-        <a href="#contact">Contact</a>
-      </nav>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="plan.html">Plan</a>
+          <a class="nav-link" href="#roles">Hiring</a>
+          <a class="nav-link" href="#contact">Contact</a>
+        </nav>
+      </div>
     </header>
 
     <main>
-      <section class="join-hero">
-        <p class="eyebrow">Wanna join the project?</p>
-        <h1>Join the Project</h1>
-      </section>
+      <section class="page-hero">
+        <div class="vanta-bg" data-vanta="halo"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
 
-      <section id="roles" class="roles-section">
-
-        <div class="roles-note">
-          <span class="note-tag">Note</span>
-          <p>These are <strong>not full-time positions</strong>. It&rsquo;s <strong>freelance work</strong> with <strong>paid deliverables</strong>.</p>
-        </div>
-
-        <div class="roles-grid">
-          <article class="role-card">
-            <span class="role-tag art">Art</span>
-            <h3>Animator</h3>
-          </article>
-
-          <article class="role-card">
-            <span class="role-tag audio">Audio</span>
-            <h3>Music Composer</h3>
-          </article>
-
-          <article class="role-card">
-            <span class="role-tag audio">Audio</span>
-            <h3>Sound Designer</h3>
-          </article>
-
-          <article class="role-card">
-            <span class="role-tag tech">Tech</span>
-            <h3>VFX Artist (Unity)</h3>
-          </article>
-
-          <article class="role-card">
-            <span class="role-tag design">Design</span>
-            <h3>UI Designer</h3>
-          </article>
-
-          <article class="role-card">
-            <span class="role-tag art">Art</span>
-            <h3>Stylized 3D Artist</h3>
-          </article>
-
-          <article class="role-card">
-            <span class="role-tag art">Art</span>
-            <h3>Illustrator</h3>
-          </article>
+        <div class="page-hero-inner">
+          <span class="eyebrow">Join the project</span>
+          <h1 class="page-hero-title glow-rose">Wanna join?</h1>
+          <p class="page-hero-lede">
+            Open freelance roles for collaborators who want to help build a co-op anime boss rush.
+          </p>
         </div>
       </section>
 
-      <section id="contact" class="contact-section">
-        <div class="contact-card">
-          <h2>Contact</h2>
-          <div class="contact-methods">
-            <div class="contact-item"><span class="eyebrow" style="margin-bottom:0.25rem">Discord</span> <span style="font-weight:850;font-size:1.1rem">topkekxd</span></div>
-            <div class="contact-item"><span class="eyebrow" style="margin-bottom:0.25rem">Email</span> <a href="mailto:bryankhamly@gmail.com" style="font-weight:850;font-size:1.1rem">bryankhamly@gmail.com</a></div>
+      <section id="roles" class="section section-bg">
+        <div class="section-inner">
+          <div class="glass note" data-reveal>
+            <span class="pill gold">Note</span>
+            <p>These are <strong>not full-time positions</strong>. It&rsquo;s <strong>freelance work</strong> with <strong>paid deliverables</strong>.</p>
+          </div>
+
+          <div class="grid-3">
+            <article class="glass role-card" data-reveal>
+              <div class="glass-body">
+                <span class="pill tag-art">Art</span>
+                <h3 class="tile-title">Animator</h3>
+              </div>
+            </article>
+            <article class="glass role-card" data-reveal style="--reveal-delay: 60ms;">
+              <div class="glass-body">
+                <span class="pill tag-audio">Audio</span>
+                <h3 class="tile-title">Music Composer</h3>
+              </div>
+            </article>
+            <article class="glass role-card" data-reveal style="--reveal-delay: 120ms;">
+              <div class="glass-body">
+                <span class="pill tag-audio">Audio</span>
+                <h3 class="tile-title">Sound Designer</h3>
+              </div>
+            </article>
+            <article class="glass role-card" data-reveal style="--reveal-delay: 180ms;">
+              <div class="glass-body">
+                <span class="pill tag-tech">Tech</span>
+                <h3 class="tile-title">VFX Artist (Unity)</h3>
+              </div>
+            </article>
+            <article class="glass role-card" data-reveal style="--reveal-delay: 240ms;">
+              <div class="glass-body">
+                <span class="pill tag-design">Design</span>
+                <h3 class="tile-title">UI Designer</h3>
+              </div>
+            </article>
+            <article class="glass role-card" data-reveal style="--reveal-delay: 300ms;">
+              <div class="glass-body">
+                <span class="pill tag-art">Art</span>
+                <h3 class="tile-title">Stylized 3D Artist</h3>
+              </div>
+            </article>
+            <article class="glass role-card" data-reveal style="--reveal-delay: 360ms;">
+              <div class="glass-body">
+                <span class="pill tag-art">Art</span>
+                <h3 class="tile-title">Illustrator</h3>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="section section-bg">
+        <div class="section-inner" style="max-width: 720px;">
+          <div class="glass contact" data-reveal>
+            <span class="eyebrow">Get in touch</span>
+            <h2 class="contact-title glow-cyan" style="margin-top: 1rem;">Contact</h2>
+            <div class="contact-row">
+              <div class="contact-item">
+                <span>Discord</span>
+                <p>topkekxd</p>
+              </div>
+              <div class="contact-item">
+                <span>Email</span>
+                <a href="mailto:bryankhamly@gmail.com">bryankhamly@gmail.com</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <p>ProjectRush Showcase</p>
-      <a href="index.html">Back to Home</a>
+    <footer class="footer">
+      <div class="footer-inner">
+        <p>ProjectRush · Showcase</p>
+        <a href="index.html">↩ Back to Home</a>
+      </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.halo.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
-
-
-
