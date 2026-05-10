@@ -1,6 +1,6 @@
 [Final Prototype]
 
-1 Boss - Will be a dragon raid [not done]
+1 Boss [not done]
 1 Tutorial Boss - Alpha Wolf [done]
 1 Regular Mob - Regular Wolf [done]
 
