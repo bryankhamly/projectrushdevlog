@@ -1,4 +1,4 @@
-// ProjectRush — page boot.
+// ProjectRush — Plumeria Studio · page boot.
 // Initializes Vanta.js animated 3D backgrounds, sets up custom
 // tabs/lightbox, runs hero character stagger and scroll-reveal animations.
 
@@ -8,10 +8,12 @@ const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").match
 // Reads data-vanta on a target element and picks the matching effect.
 // Each page only loads the JS for the one effect it uses, so VANTA[*]
 // is checked before calling.
+// Light "plumeria" palette: warm golden lines/rings/halo on a near-white
+// cream background to match the studio logo.
 const vantaPalette = {
   net: {
-    color: 0x4bd7ff,
-    backgroundColor: 0x07080c,
+    color: 0xe1971d,
+    backgroundColor: 0xfffdf7,
     points: 11.0,
     maxDistance: 22.0,
     spacing: 16.0,
@@ -19,13 +21,13 @@ const vantaPalette = {
     backgroundAlpha: 1
   },
   rings: {
-    color: 0xf5c85b,
-    backgroundColor: 0x07080c,
+    color: 0xe1971d,
+    backgroundColor: 0xfffdf7,
     backgroundAlpha: 1
   },
   halo: {
-    baseColor: 0x9b80ff,
-    backgroundColor: 0x07080c,
+    baseColor: 0xf0a92a,
+    backgroundColor: 0xfffdf7,
     amplitudeFactor: 1.4,
     xOffset: 0,
     yOffset: 0,
