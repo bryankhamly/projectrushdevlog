@@ -1,0 +1,1492 @@
+<!doctype html>
+<html lang="en" class="locked">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Private — Plumeria Studio internal roadmap for ProjectRush: two-game strategy, funding plan, game loop, scope milestones, and the Early Prototype asset budget.">
+    <title>Studio Roadmap · Plumeria Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Reveal the page instantly for a returning visitor who already unlocked
+         it this session, before first paint, so they never see the gate flash. -->
+    <script>
+      try {
+        if (sessionStorage.getItem("pr_roadmap_unlocked") === "1") {
+          document.documentElement.classList.remove("locked");
+        }
+      } catch (e) {}
+    </script>
+
+    <style>
+      /* =========================================================
+         Studio Roadmap — page-specific styles (rm-*)
+         Builds on styles.css (plumeria light theme). This page is a
+         private, password-gated internal document, so it is NOT linked
+         from the site navigation.
+         ========================================================= */
+
+      /* ---- Password gate ----
+         A full-screen, opaque, elegant-dark lock screen. The transparent
+         studio lockup shines on the dark panel (per brand usage). While
+         html.locked, the site content keeps its layout (so Vanta sizes
+         correctly) but is hidden from view and from the tab order. */
+      html.locked body { overflow: hidden; }
+      html.locked #site { visibility: hidden; }
+      html:not(.locked) .gate { display: none; }
+
+      .gate {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: grid;
+        place-items: center;
+        padding: clamp(1.2rem, 5vw, 2rem);
+        background:
+          radial-gradient(70% 110% at 18% 22%, rgba(255, 210, 77, 0.16), transparent 60%),
+          radial-gradient(65% 110% at 84% 82%, rgba(91, 182, 212, 0.13), transparent 60%),
+          var(--surface-dark);
+      }
+
+      .gate-card {
+        width: min(100%, 440px);
+        text-align: center;
+        padding: clamp(1.8rem, 5vw, 2.8rem);
+        border-radius: var(--radius);
+        border: 1px solid rgba(255, 214, 77, 0.28);
+        background: rgba(255, 247, 230, 0.04);
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+        animation: rm-enter 600ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .gate-logo {
+        width: clamp(96px, 22vw, 128px);
+        margin: 0 auto 1.3rem;
+        filter: drop-shadow(0 10px 36px rgba(255, 210, 77, 0.32));
+      }
+
+      .gate .eyebrow {
+        color: var(--yellow-bright);
+        border-color: rgba(255, 214, 77, 0.5);
+        background: rgba(255, 214, 77, 0.12);
+      }
+
+      .gate-title {
+        margin-top: 1rem;
+        font-family: var(--font-display);
+        font-size: clamp(1.9rem, 6vw, 2.6rem);
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        line-height: 1.05;
+      }
+
+      .gate-text {
+        margin-top: 0.85rem;
+        color: rgba(255, 247, 230, 0.74);
+        font-size: 0.96rem;
+        line-height: 1.6;
+      }
+
+      .gate-form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1.6rem;
+      }
+
+      .gate-input {
+        flex: 1 1 180px;
+        min-width: 0;
+        padding: 0.9rem 1.1rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 214, 77, 0.34);
+        background: rgba(23, 18, 10, 0.6);
+        color: #fff7e6;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        letter-spacing: 0.04em;
+        transition: border-color 200ms, box-shadow 200ms;
+      }
+      .gate-input::placeholder { color: rgba(255, 247, 230, 0.4); letter-spacing: 0.1em; }
+      .gate-input:focus {
+        outline: none;
+        border-color: var(--yellow-bright);
+        box-shadow: 0 0 0 3px rgba(255, 214, 77, 0.18);
+      }
+
+      .gate-form .btn { flex: 0 0 auto; }
+
+      .gate-error {
+        margin-top: 1rem;
+        color: #ff9b9b;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .gate-error[hidden] { display: none; }
+
+      .gate-hint {
+        margin-top: 1.4rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 247, 230, 0.4);
+      }
+
+      .gate-card.shake { animation: rm-shake 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+      @keyframes rm-shake {
+        10%, 90% { transform: translateX(-1px); }
+        20%, 80% { transform: translateX(2px); }
+        30%, 50%, 70% { transform: translateX(-5px); }
+        40%, 60% { transform: translateX(5px); }
+      }
+
+      /* ---- Site entrance on unlock ---- */
+      #site.entering { animation: rm-enter 720ms cubic-bezier(0.16, 1, 0.3, 1); }
+      @keyframes rm-enter {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* ---- Private badge in the slim nav ---- */
+      .nav-private {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.34rem 0.8rem;
+        border: 1px solid rgba(232, 160, 32, 0.45);
+        border-radius: 999px;
+        background: rgba(255, 210, 77, 0.14);
+        color: var(--gold-deep);
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .nav-private::before {
+        content: "";
+        width: 6px; height: 6px;
+        border-radius: 999px;
+        background: var(--gold);
+        box-shadow: 0 0 10px var(--gold-glow);
+      }
+
+      /* ---- Hero stat strip ---- */
+      .rm-herostats {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.7rem;
+        margin-top: 2rem;
+      }
+      .rm-stat-chip {
+        display: grid;
+        gap: 0.2rem;
+        padding: 0.7rem 1.1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(232, 160, 32, 0.28);
+        background: rgba(255, 255, 255, 0.62);
+        box-shadow: var(--shadow-soft);
+        text-align: left;
+      }
+      .rm-stat-chip b {
+        font-family: var(--font-body);
+        font-size: 1.02rem;
+        font-weight: 700;
+        color: var(--ink);
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
+      .rm-stat-chip span {
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+      }
+
+      /* ---- Generic helpers ---- */
+      .rm-lead {
+        max-width: 760px;
+        color: var(--ink-soft);
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+      .rm-lead + .rm-lead { margin-top: 1rem; }
+
+      .rm-bullets { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: 0.7rem; }
+      .rm-bullets li {
+        position: relative;
+        padding-left: 1.6rem;
+        color: var(--ink-soft);
+        line-height: 1.55;
+      }
+      .rm-bullets li::before {
+        content: "";
+        position: absolute;
+        left: 0; top: 0.55em;
+        width: 0.55rem; height: 0.55rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--yellow-bright), var(--gold));
+        box-shadow: 0 0 10px var(--gold-glow);
+      }
+      .rm-bullets li strong { color: var(--ink); }
+
+      /* ---- Two-game strategy ---- */
+      .rm-strategy { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+
+      .rm-gamecard { padding: clamp(1.5rem, 3vw, 2rem); }
+      .rm-gamecard-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .rm-game-tag {
+        font-family: var(--font-display);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+      }
+      .rm-gamecard h3 {
+        margin-top: 0.5rem;
+        font-family: var(--font-body);
+        font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--ink);
+      }
+
+      .rm-subcard {
+        margin-top: 1.1rem;
+        padding: 1.1rem 1.2rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--line-strong);
+        background: rgba(255, 253, 247, 0.7);
+      }
+      .rm-subcard h4 {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+        font-family: var(--font-body);
+        font-size: 1.02rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .rm-subcard p { margin-top: 0.5rem; color: var(--ink-soft); font-size: 0.92rem; line-height: 1.55; }
+      .rm-ref {
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+      }
+
+      /* ---- Funding plan ---- */
+      .rm-fund-legend { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.8rem; margin-bottom: 2.2rem; }
+      .rm-fund-src {
+        padding: 1rem 1.1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(232, 160, 32, 0.28);
+        background: rgba(255, 255, 255, 0.66);
+        box-shadow: var(--shadow-soft);
+      }
+      .rm-fund-key {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.28rem 0.7rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--yellow-bright), var(--gold));
+        color: #2c2517;
+        font-family: var(--font-body);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        box-shadow: 0 6px 16px rgba(232, 160, 32, 0.3);
+      }
+      .rm-fund-src p { margin-top: 0.7rem; font-size: 0.9rem; line-height: 1.5; color: var(--ink-soft); }
+      .rm-fund-src p strong { color: var(--ink); }
+
+      .rm-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: step; }
+      .rm-step {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.2rem;
+        padding: 0 0 1.6rem 0;
+      }
+      .rm-step:last-child { padding-bottom: 0; }
+      .rm-step-num {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 2.7rem; height: 2.7rem;
+        border-radius: 999px;
+        border: 1px solid rgba(232, 160, 32, 0.5);
+        background: rgba(255, 210, 77, 0.16);
+        color: var(--gold-deep);
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.05rem;
+      }
+      /* connector line between numbered steps */
+      .rm-step:not(:last-child) .rm-step-num::after {
+        content: "";
+        position: absolute;
+        top: 2.7rem; left: 50%;
+        transform: translateX(-50%);
+        width: 2px; height: calc(100% + 1.6rem - 2.7rem);
+        min-height: 1.4rem;
+        background: linear-gradient(180deg, rgba(232, 160, 32, 0.5), rgba(232, 160, 32, 0.12));
+      }
+      .rm-step-body {
+        padding-top: 0.35rem;
+        color: var(--ink-soft);
+        line-height: 1.6;
+      }
+      .rm-step-body strong { color: var(--ink); }
+      .rm-tag {
+        display: inline-block;
+        padding: 0.12rem 0.5rem;
+        border-radius: 6px;
+        background: rgba(232, 160, 32, 0.14);
+        border: 1px solid rgba(232, 160, 32, 0.4);
+        color: var(--gold-deep);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+
+      /* ---- Game loop ---- */
+      .rm-loop {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .rm-loop-step {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.7rem 1.1rem;
+        border-radius: 999px;
+        border: 1px solid var(--line-strong);
+        background: rgba(255, 255, 255, 0.74);
+        font-weight: 700;
+        font-size: 0.92rem;
+        color: var(--ink);
+        box-shadow: var(--shadow-soft);
+      }
+      .rm-loop-step.is-up { color: var(--sky-deep); border-color: rgba(91, 182, 212, 0.45); background: rgba(91, 182, 212, 0.1); }
+      .rm-loop-step.is-area {
+        color: #2c2517;
+        background: linear-gradient(135deg, var(--yellow-bright), var(--gold));
+        border-color: transparent;
+        box-shadow: 0 10px 24px rgba(232, 160, 32, 0.32);
+      }
+      .rm-loop-arrow { color: var(--gold); font-weight: 800; font-size: 1.1rem; opacity: 0.7; }
+
+      /* ---- Scope milestones ---- */
+      .rm-scope { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+      .rm-scope-card { padding: clamp(1.5rem, 3vw, 2rem); }
+      .rm-scope-card h3 {
+        font-family: var(--font-body);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .rm-scope-rows { display: grid; gap: 0.7rem; margin-top: 1.2rem; }
+      .rm-scope-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.85rem 1rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--line);
+        background: rgba(255, 253, 247, 0.7);
+      }
+      .rm-scope-n {
+        flex: 0 0 auto;
+        display: grid; place-items: center;
+        min-width: 2.6rem; height: 2.6rem;
+        padding: 0 0.6rem;
+        border-radius: 0.6rem;
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.15rem;
+        color: var(--gold-deep);
+        background: rgba(232, 160, 32, 0.12);
+        border: 1px solid rgba(232, 160, 32, 0.4);
+      }
+      .rm-scope-row span { color: var(--ink); font-weight: 600; }
+
+      /* ---- Budget dashboard ---- */
+      .rm-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.1rem; }
+      .rm-statcard { padding: 1.5rem 1.4rem; }
+      .rm-statcard .k {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+      }
+      .rm-statcard .v {
+        margin-top: 0.7rem;
+        font-family: var(--font-body);
+        font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--ink);
+        letter-spacing: -0.01em;
+      }
+      .rm-statcard .s { margin-top: 0.45rem; font-size: 0.82rem; color: var(--ink-mute); font-weight: 600; }
+      .rm-statcard.is-acq .v { color: var(--leaf); }
+      .rm-statcard.is-prog .v { color: var(--gold-deep); }
+
+      .rm-split { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 1.1rem; margin-top: 1.1rem; }
+      .rm-panel { padding: 1.5rem 1.5rem 1.6rem; }
+      .rm-panel h3 {
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--gold-deep);
+        margin-bottom: 1.1rem;
+      }
+
+      /* by status rows */
+      .rm-status-row {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid var(--line);
+      }
+      .rm-status-row:first-of-type { border-top: 0; }
+      .rm-dot { width: 0.7rem; height: 0.7rem; border-radius: 999px; }
+      .rm-dot.needed { background: var(--gold); }
+      .rm-dot.acquired { background: var(--leaf); }
+      .rm-dot.planned { background: var(--sky); }
+      .rm-dot.ordered { background: #b79bd6; }
+      .rm-status-name { font-weight: 700; color: var(--ink); }
+      .rm-status-name small { display: block; font-weight: 600; color: var(--ink-mute); font-size: 0.78rem; letter-spacing: 0; }
+      .rm-status-val { text-align: right; font-weight: 700; color: var(--ink); white-space: nowrap; font-size: 0.92rem; }
+
+      /* by group bars */
+      .rm-bar-row { padding: 0.6rem 0; border-top: 1px solid var(--line); }
+      .rm-bar-row:first-of-type { border-top: 0; }
+      .rm-bar-top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: 0.45rem; }
+      .rm-bar-name { font-weight: 700; color: var(--ink); font-size: 0.92rem; }
+      .rm-bar-val { font-weight: 700; color: var(--gold-deep); font-size: 0.84rem; white-space: nowrap; }
+      .rm-bar-track { height: 0.6rem; border-radius: 999px; background: rgba(44, 37, 23, 0.08); overflow: hidden; }
+      .rm-bar-fill {
+        height: 100%;
+        width: var(--p, 0%);
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--yellow-bright), var(--gold), #e8951a);
+        box-shadow: 0 0 14px var(--gold-glow);
+        transition: width 360ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      /* ---- Item list (grouped cards) ---- */
+      .rm-itembar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.2rem;
+      }
+      .rm-itembar .btn { padding: 0.6rem 1.1rem; font-size: 0.78rem; }
+      .rm-excluded-note { font-size: 0.84rem; color: var(--ink-mute); font-weight: 600; }
+      .rm-excluded-note b { color: var(--gold-deep); }
+
+      .rm-groups { display: grid; gap: 1.1rem; }
+      .rm-group { padding: 0; }
+      .rm-group-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding: 1.2rem 1.4rem;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 253, 247, 0.6);
+      }
+      .rm-group-name {
+        font-family: var(--font-body);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .rm-group-key {
+        display: block;
+        margin-top: 0.25rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: var(--ink-mute);
+      }
+      .rm-group-tot { text-align: right; }
+      .rm-group-range { display: block; font-weight: 800; color: var(--gold-deep); white-space: nowrap; }
+      .rm-group-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); }
+
+      .rm-items { display: grid; }
+      .rm-item {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.95rem 1.4rem;
+        border-top: 1px solid var(--line);
+        transition: background 200ms, opacity 200ms;
+      }
+      .rm-item:first-child { border-top: 0; }
+      .rm-item.is-excluded { opacity: 0.42; }
+      .rm-item.is-excluded .rm-item-name { text-decoration: line-through; }
+
+      .rm-ex {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 1.25rem; height: 1.25rem;
+        border-radius: 0.4rem;
+        border: 1px solid var(--line-strong);
+        background: #fff;
+        cursor: pointer;
+        position: relative;
+        transition: border-color 160ms, background 160ms;
+      }
+      .rm-ex:hover { border-color: var(--gold); }
+      .rm-ex:checked { background: var(--gold); border-color: var(--gold); }
+      .rm-ex:checked::after {
+        content: "✕";
+        position: absolute;
+        inset: 0;
+        display: grid; place-items: center;
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+      .rm-ex:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+      .rm-item-name { font-weight: 700; color: var(--ink); font-size: 0.98rem; line-height: 1.3; }
+      .rm-item-sub { display: block; margin-top: 0.2rem; font-size: 0.8rem; color: var(--ink-mute); font-weight: 600; }
+      .rm-item-meta { display: flex; align-items: center; gap: 0.9rem; justify-self: end; }
+      .rm-item-price { font-weight: 800; color: var(--ink); white-space: nowrap; font-size: 0.92rem; }
+      .pill.acquired { color: var(--leaf); border-color: rgba(47, 158, 99, 0.5); background: rgba(47, 158, 99, 0.12); }
+
+      .rm-note-line {
+        margin-top: 0.9rem;
+        font-size: 0.85rem;
+        color: var(--ink-mute);
+        line-height: 1.55;
+      }
+      .rm-note-line strong { color: var(--ink); }
+
+      /* Emphasis callout + temporary Asset-Store swap tag */
+      .rm-emphasis,
+      .rm-emphasis:hover {
+        border-color: rgba(232, 160, 32, 0.5);
+        background: linear-gradient(180deg, rgba(255, 210, 77, 0.16), rgba(255, 255, 255, 0.82));
+        box-shadow: var(--shadow-soft), inset 5px 0 0 var(--gold);
+      }
+      .rm-swap-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-top: 0.55rem;
+        padding: 0.22rem 0.62rem;
+        border-radius: 999px;
+        border: 1px dashed rgba(91, 182, 212, 0.6);
+        background: rgba(91, 182, 212, 0.1);
+        color: var(--sky-deep);
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      /* ---- Responsive ---- */
+      @media (max-width: 1100px) {
+        .rm-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .rm-fund-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .rm-split { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 760px) {
+        .rm-strategy { grid-template-columns: 1fr; }
+        .rm-scope { grid-template-columns: 1fr; }
+        .rm-stats { grid-template-columns: 1fr; }
+        .rm-fund-legend { grid-template-columns: 1fr; }
+        .rm-item { grid-template-columns: auto 1fr; }
+        .rm-item-meta { grid-column: 1 / -1; justify-self: start; padding-left: 2.25rem; }
+        .rm-loop { gap: 0.4rem; }
+        .rm-loop-step { font-size: 0.82rem; padding: 0.55rem 0.85rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="site">
+      <header class="nav">
+        <div class="nav-inner">
+          <a class="brand" href="index.html" aria-label="Plumeria Studio — ProjectRush home">
+            <span class="brand-mark" aria-hidden="true"><img src="Plumeria_Studio_Logo_Isolated.png" alt=""></span>
+            <span class="brand-name">
+              <strong>Plumeria Studio</strong>
+              <small>ProjectRush</small>
+            </span>
+          </a>
+
+          <nav class="nav-links" aria-label="Roadmap sections">
+            <a class="nav-link" href="#strategy">Strategy</a>
+            <a class="nav-link" href="#funding">Funding</a>
+            <a class="nav-link" href="#loop">Loop</a>
+            <a class="nav-link" href="#scope">Scope</a>
+            <a class="nav-link" href="#budget">Budget</a>
+            <span class="nav-private">Confidential</span>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <!-- ===================== HERO ===================== -->
+        <section class="page-hero">
+          <div class="vanta-bg" data-vanta="net"></div>
+          <div class="hero-overlay" aria-hidden="true"></div>
+
+          <div class="page-hero-inner">
+            <span class="eyebrow">Confidential · Internal Roadmap</span>
+            <h1 class="page-hero-title glow-gold">Studio Roadmap</h1>
+            <p class="page-hero-lede">
+              The plan behind ProjectRush — Plumeria Studio&rsquo;s two-game IP strategy, the
+              funding sequence, the core game loop, and the full asset budget for the
+              Early Prototype. A living document; numbers and scope shift as the game evolves.
+            </p>
+
+            <div class="rm-herostats">
+              <span class="rm-stat-chip"><b>2-Game IP Strategy</b><span>Direction</span></span>
+              <span class="rm-stat-chip"><b>Early Prototype</b><span>Current Milestone</span></span>
+              <span class="rm-stat-chip"><b>26 Assets</b><span>Tracked</span></span>
+              <span class="rm-stat-chip"><b>$8,475 – $19,450</b><span>Prototype Budget</span></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== STRATEGY ===================== -->
+        <section id="strategy" class="section section-bg" aria-labelledby="strategy-title">
+          <div class="section-inner">
+            <div class="glass note" data-reveal>
+              <span class="pill gold">Note</span>
+              <p><strong>Living document.</strong> This roadmap combines the studio strategy plan with the
+              prototype asset list. Scope, costs, and timing are still being finalized and will change.</p>
+            </div>
+
+            <div class="section-heading">
+              <div class="section-eyebrow-stack" data-reveal>
+                <span class="eyebrow">Direction</span>
+              </div>
+              <h2 id="strategy-title" class="section-title" data-reveal>A two-game strategy to build the World IP.</h2>
+            </div>
+
+            <div class="rm-strategy">
+              <!-- GAME 1 -->
+              <article class="glass rm-gamecard" data-reveal>
+                <div class="rm-gamecard-head">
+                  <span class="rm-game-tag">Game 1</span>
+                  <span class="pill gold">Builds the IP</span>
+                </div>
+                <h3>Low-scope game, focused on fun</h3>
+                <ul class="rm-bullets">
+                  <li><strong>Builds a World IP</strong> — establishes the fiction and universe.</li>
+                  <li><strong>Low scope</strong> game, deliberately small.</li>
+                  <li><strong>Builds revenue</strong> to fund what comes next.</li>
+                  <li>Mainly focused on a <strong>fun gameplay experience</strong>.</li>
+                </ul>
+
+                <div class="rm-subcard">
+                  <h4>Requires <span class="rm-ref">Talent · World IP</span></h4>
+                  <ul class="rm-bullets" style="margin-top:0.7rem;">
+                    <li><strong>Writer</strong> for World IP</li>
+                    <li><strong>Concept Artist</strong> for World IP</li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- GAME 2 -->
+              <article class="glass rm-gamecard" data-reveal style="--reveal-delay: 90ms;">
+                <div class="rm-gamecard-head">
+                  <span class="rm-game-tag">Game 2</span>
+                  <span class="pill todo">Bigger scope</span>
+                </div>
+                <h3>The sequel that solidifies the IP</h3>
+                <ul class="rm-bullets">
+                  <li><strong>Bigger scope</strong> — solidifies the World IP.</li>
+                  <li><strong>Sequel</strong> of the Game 1 World IP.</li>
+                  <li>Focus on <strong>world building</strong> and making it <strong>emotionally compelling</strong>.</li>
+                </ul>
+
+                <div class="rm-subcard">
+                  <h4>Game 2A — Live Service <span class="rm-ref">Where Winds Meet · Honor of Kings: World</span></h4>
+                  <p>Higher funding required, but generally higher revenue <em>(research?)</em>.
+                  Revenue from <strong>Battlepass / Cosmetics / Sponsorships</strong>.</p>
+                </div>
+
+                <div class="rm-subcard">
+                  <h4>Game 2B — Full Product <span class="rm-ref">Granblue Fantasy: Relink · Crimson Desert?</span></h4>
+                  <p>Revenue from <strong>sales</strong>.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== FUNDING ===================== -->
+        <section id="funding" class="section section-bg" aria-labelledby="funding-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <div class="section-eyebrow-stack" data-reveal>
+                <span class="eyebrow">Game 1 · Financial Plan</span>
+              </div>
+              <h2 id="funding-title" class="section-title" data-reveal>Funding the prototype, then the game.</h2>
+            </div>
+
+            <div class="rm-fund-legend" data-reveal>
+              <div class="rm-fund-src">
+                <span class="rm-fund-key">FUND1</span>
+                <p><strong>Personal capital</strong> — &ldquo;my money.&rdquo;</p>
+              </div>
+              <div class="rm-fund-src">
+                <span class="rm-fund-key">FUND2</span>
+                <p><strong>Oliver &amp; Gavin</strong> — partner investment.</p>
+              </div>
+              <div class="rm-fund-src">
+                <span class="rm-fund-key">FUND3</span>
+                <p><strong>Crowdfunding</strong>.</p>
+              </div>
+              <div class="rm-fund-src">
+                <span class="rm-fund-key">FUND4</span>
+                <p><strong>Other investor</strong> — up to ~15%, or something else.</p>
+              </div>
+              <div class="rm-fund-src">
+                <span class="rm-fund-key">FUND5</span>
+                <p><strong>Early Access revenue</strong>.</p>
+              </div>
+            </div>
+
+            <div class="glass glass-body" data-reveal>
+              <ol class="rm-steps">
+                <li class="rm-step">
+                  <span class="rm-step-num">1</span>
+                  <div class="rm-step-body">Start with <span class="rm-tag">FUND1</span> — <strong>personal capital</strong> (&ldquo;my money&rdquo;).</div>
+                </li>
+                <li class="rm-step">
+                  <span class="rm-step-num">2</span>
+                  <div class="rm-step-body">Acquire <span class="rm-tag">FUND2</span> — <strong>Oliver and Gavin</strong>.</div>
+                </li>
+                <li class="rm-step">
+                  <span class="rm-step-num">3</span>
+                  <div class="rm-step-body"><span class="rm-tag">FUND1</span> + <span class="rm-tag">FUND2</span> = <strong>Early Prototype</strong>.</div>
+                </li>
+                <li class="rm-step">
+                  <span class="rm-step-num">4</span>
+                  <div class="rm-step-body">Use the Early Prototype to acquire <span class="rm-tag">FUND3</span> (<strong>Crowdfunding</strong>) <strong>and/or</strong> <span class="rm-tag">FUND4</span> (<strong>other investor</strong>, up to ~15% or something else).</div>
+                </li>
+                <li class="rm-step">
+                  <span class="rm-step-num">5</span>
+                  <div class="rm-step-body">Use <span class="rm-tag">FUND1–4</span> (if applicable) to create the <strong>Early Access Build</strong>.</div>
+                </li>
+                <li class="rm-step">
+                  <span class="rm-step-num">6</span>
+                  <div class="rm-step-body"><span class="rm-tag">FUND5</span> = <strong>Early Access revenue</strong>.</div>
+                </li>
+                <li class="rm-step">
+                  <span class="rm-step-num">7</span>
+                  <div class="rm-step-body">Use <span class="rm-tag">FUND1–5</span> to <strong>complete the game</strong>.</div>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== GAME LOOP ===================== -->
+        <section id="loop" class="section section-bg" aria-labelledby="loop-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <div class="section-eyebrow-stack" data-reveal>
+                <span class="eyebrow">Core Gameplay</span>
+              </div>
+              <h2 id="loop-title" class="section-title" data-reveal>The game loop — a simple boss rush.</h2>
+            </div>
+
+            <div class="glass glass-body" data-reveal>
+              <div class="rm-loop">
+                <span class="rm-loop-step">Regular Boss</span>
+                <span class="rm-loop-arrow">→</span>
+                <span class="rm-loop-step is-up">Upgrades</span>
+                <span class="rm-loop-arrow">→</span>
+                <span class="rm-loop-step">Regular Boss</span>
+                <span class="rm-loop-arrow">→</span>
+                <span class="rm-loop-step is-up">Upgrades</span>
+                <span class="rm-loop-arrow">→</span>
+                <span class="rm-loop-step">Regular Boss</span>
+                <span class="rm-loop-arrow">→</span>
+                <span class="rm-loop-step is-up">Upgrades</span>
+                <span class="rm-loop-arrow">→</span>
+                <span class="rm-loop-step is-area">Area Boss</span>
+              </div>
+              <p class="rm-note-line"><strong>1 Area = 1 Run.</strong> A very simple boss rush: clear three regular bosses
+              (collecting upgrades between each) and finish the run on the area boss. <strong>Proving this loop is the
+              whole point of the Early Prototype</strong> — the playable classes and normal bosses can stand in as
+              temporary Asset Store assets for now; the loop is what matters.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== SCOPE ===================== -->
+        <section id="scope" class="section section-bg" aria-labelledby="scope-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <div class="section-eyebrow-stack" data-reveal>
+                <span class="eyebrow">Milestones</span>
+              </div>
+              <h2 id="scope-title" class="section-title" data-reveal>From prototype to Early Access.</h2>
+            </div>
+
+            <div class="rm-scope">
+              <article class="glass rm-scope-card" data-reveal>
+                <span class="pill gold">Now</span>
+                <h3 style="margin-top:0.8rem;">Early Prototype</h3>
+                <p class="rm-lead" style="font-size:0.92rem;margin-top:0.5rem;">Built to match the game loop.</p>
+                <div class="rm-scope-rows">
+                  <div class="rm-scope-row"><span class="rm-scope-n">3</span><span>Regular Bosses</span></div>
+                  <div class="rm-scope-row"><span class="rm-scope-n">1</span><span>Area Boss</span></div>
+                  <div class="rm-scope-row"><span class="rm-scope-n">2</span><span>Playable Classes — 1 Melee, 1 Ranged</span></div>
+                </div>
+                <p class="rm-note-line"><strong>Cost saver:</strong> the <strong>playable classes</strong> and
+                <strong>normal (regular) bosses</strong> can be swapped for <strong>temporary Asset Store assets</strong>
+                to lower prototype costs — the prototype&rsquo;s real job is proving the <strong>game loop</strong>, not bespoke art.</p>
+              </article>
+
+              <article class="glass rm-scope-card" data-reveal style="--reveal-delay: 90ms;">
+                <span class="pill todo">Next</span>
+                <h3 style="margin-top:0.8rem;">Early Access Build</h3>
+                <p class="rm-lead" style="font-size:0.92rem;margin-top:0.5rem;">The expanded, monetizable build.</p>
+                <div class="rm-scope-rows">
+                  <div class="rm-scope-row"><span class="rm-scope-n">4</span><span>Playable Classes</span></div>
+                  <div class="rm-scope-row"><span class="rm-scope-n">5</span><span>Regular Bosses</span></div>
+                  <div class="rm-scope-row"><span class="rm-scope-n">2</span><span>Area Bosses</span></div>
+                </div>
+                <p class="rm-note-line">Funded by <strong>FUND1–4</strong>; in turn it generates <strong>FUND5</strong>
+                (Early Access revenue) to complete the game.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== BUDGET ===================== -->
+        <section id="budget" class="section section-bg" aria-labelledby="budget-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <div class="section-eyebrow-stack" data-reveal>
+                <span class="eyebrow">Early Prototype · Asset Budget</span>
+              </div>
+              <h2 id="budget-title" class="section-title" data-reveal>The numbers behind the prototype.</h2>
+            </div>
+
+            <div class="glass note" data-reveal>
+              <span class="pill gold">How it works</span>
+              <p>Each item&rsquo;s <strong>status</strong> sets the math — <strong>✓ Acquired</strong> = already have it ·
+              <strong>Needed / Planned / Ordered</strong> = still to get. Tick <strong>Exclude</strong> on any item in the
+              list below for a quick what-if — every total here updates live.</p>
+            </div>
+
+            <div class="glass note rm-emphasis" data-reveal>
+              <span class="pill gold">Cost strategy</span>
+              <p><strong>Playable classes and normal bosses can be temporary Asset Store assets.</strong> The largest
+              line items below — the <strong>Class</strong> and <strong>Regular Boss</strong> groups — can be filled with
+              placeholder store assets to cut the prototype cost dramatically. The Early Prototype is <strong>mainly about
+              proving the game loop</strong>; bespoke models, VFX, and animation can come later (the Area Boss stays the showpiece).</p>
+            </div>
+
+            <!-- Summary cards -->
+            <div class="rm-stats" data-reveal>
+              <article class="glass rm-statcard">
+                <div class="k">Total Budget</div>
+                <div class="v" id="stat-total-range">$8,475 – $19,450</div>
+                <div class="s"><span id="stat-total-count">26</span> items tracked</div>
+              </article>
+              <article class="glass rm-statcard is-acq">
+                <div class="k">✓ Acquired</div>
+                <div class="v" id="stat-acq-range">$150 – $300</div>
+                <div class="s"><span id="stat-acq-count">1</span> item secured</div>
+              </article>
+              <article class="glass rm-statcard">
+                <div class="k">◷ Remaining</div>
+                <div class="v" id="stat-rem-range">$8,325 – $19,150</div>
+                <div class="s"><span id="stat-rem-count">25</span> items to get</div>
+              </article>
+              <article class="glass rm-statcard is-prog">
+                <div class="k">Progress</div>
+                <div class="v" id="stat-prog">4%</div>
+                <div class="s"><span id="stat-prog-detail">1 of 26 acquired</span></div>
+              </article>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="glass glass-body" data-reveal style="margin-top:1.1rem;">
+              <div class="progress" style="max-width:none;margin:0;">
+                <div class="progress-stats">
+                  <span class="label">Assets acquired</span>
+                  <span class="count" id="prog-count">1 / 26 done</span>
+                </div>
+                <div class="progress-bar" role="progressbar" id="prog-bar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="100">
+                  <div class="progress-fill" id="prog-fill" style="--p: 4%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- By status + By group -->
+            <div class="rm-split">
+              <article class="glass rm-panel" data-reveal>
+                <h3>By Status</h3>
+                <div class="rm-status-row">
+                  <span class="rm-dot needed"></span>
+                  <span class="rm-status-name">Needed <small>still to get</small></span>
+                  <span class="rm-status-val"><span id="st-needed-range">$8,325 – $19,150</span><br><small id="st-needed-count">25 items</small></span>
+                </div>
+                <div class="rm-status-row">
+                  <span class="rm-dot acquired"></span>
+                  <span class="rm-status-name">Acquired <small>already have</small></span>
+                  <span class="rm-status-val"><span id="st-acq-range">$150 – $300</span><br><small id="st-acq-count">1 item</small></span>
+                </div>
+                <div class="rm-status-row">
+                  <span class="rm-dot planned"></span>
+                  <span class="rm-status-name">Planned <small>not started</small></span>
+                  <span class="rm-status-val">$0 – $0<br><small>0 items</small></span>
+                </div>
+                <div class="rm-status-row">
+                  <span class="rm-dot ordered"></span>
+                  <span class="rm-status-name">Ordered <small>in progress</small></span>
+                  <span class="rm-status-val">$0 – $0<br><small>0 items</small></span>
+                </div>
+              </article>
+
+              <article class="glass rm-panel" data-reveal style="--reveal-delay: 80ms;">
+                <h3>By Group <span style="font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-mute);">· max spend</span></h3>
+                <div class="rm-bar-row" data-bar="EnvArt">
+                  <div class="rm-bar-top"><span class="rm-bar-name">Environment Art</span><span class="rm-bar-val">$1,800 – $3,600</span></div>
+                  <div class="rm-bar-track"><div class="rm-bar-fill" style="--p:100%;"></div></div>
+                </div>
+                <div class="rm-bar-row" data-bar="Boss1">
+                  <div class="rm-bar-top"><span class="rm-bar-name">Regular Boss 1</span><span class="rm-bar-val">$1,275 – $3,050</span></div>
+                  <div class="rm-bar-track"><div class="rm-bar-fill" style="--p:84.7%;"></div></div>
+                </div>
+                <div class="rm-bar-row" data-bar="Boss2">
+                  <div class="rm-bar-top"><span class="rm-bar-name">Regular Boss 2</span><span class="rm-bar-val">$1,275 – $3,050</span></div>
+                  <div class="rm-bar-track"><div class="rm-bar-fill" style="--p:84.7%;"></div></div>
+                </div>
+                <div class="rm-bar-row" data-bar="Boss3">
+                  <div class="rm-bar-top"><span class="rm-bar-name">Regular Boss 3</span><span class="rm-bar-val">$1,275 – $3,050</span></div>
+                  <div class="rm-bar-track"><div class="rm-bar-fill" style="--p:84.7%;"></div></div>
+                </div>
+                <div class="rm-bar-row" data-bar="AreaBoss1">
+                  <div class="rm-bar-top"><span class="rm-bar-name">Area Boss 1</span><span class="rm-bar-val">$1,275 – $3,050</span></div>
+                  <div class="rm-bar-track"><div class="rm-bar-fill" style="--p:84.7%;"></div></div>
+                </div>
+                <div class="rm-bar-row" data-bar="Class1">
+                  <div class="rm-bar-top"><span class="rm-bar-name">Class 1</span><span class="rm-bar-val">$1,075 – $2,650</span></div>
+                  <div class="rm-bar-track"><div class="rm-bar-fill" style="--p:73.6%;"></div></div>
+                </div>
+                <div class="rm-bar-row" data-bar="Music">
+                  <div class="rm-bar-top"><span class="rm-bar-name">Music</span><span class="rm-bar-val">$500 – $1,000</span></div>
+                  <div class="rm-bar-track"><div class="rm-bar-fill" style="--p:27.8%;"></div></div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================== ITEM LIST ===================== -->
+        <section id="items" class="section section-bg" aria-labelledby="items-title">
+          <div class="section-inner">
+            <div class="section-heading">
+              <div class="section-eyebrow-stack" data-reveal>
+                <span class="eyebrow">Full Item List</span>
+              </div>
+              <h2 id="items-title" class="section-title" data-reveal>Every asset, grouped.</h2>
+            </div>
+
+            <div class="rm-itembar" data-reveal>
+              <p class="rm-excluded-note"><b id="excluded-count">0</b> <span id="excluded-word">items</span> excluded from the what-if totals.</p>
+              <button class="btn btn-ghost" type="button" id="reset-exclude">Reset what-if</button>
+            </div>
+
+            <div class="rm-groups" id="rm-groups">
+
+              <!-- Class1 -->
+              <article class="glass rm-group" data-group="Class1" data-reveal>
+                <header class="rm-group-head">
+                  <div>
+                    <span class="rm-group-name">Class 1 — Playable</span>
+                    <span class="rm-group-key">Class1 · Melee / Ranged · EarlyPrototype</span>
+                    <span class="rm-swap-tag">⇄ Temp store asset OK</span>
+                  </div>
+                  <div class="rm-group-tot">
+                    <span class="rm-group-range" data-group-range>$1,075 – $2,650</span>
+                    <span class="rm-group-label" data-group-count>4 items</span>
+                  </div>
+                </header>
+                <div class="rm-items">
+                  <div class="rm-item" data-min="50" data-max="100" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Class1 Weapon">
+                    <div><span class="rm-item-name">Class1 Weapon</span><span class="rm-item-sub">Class Weapon Model · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$50 – $100</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1500" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Class1 Animations">
+                    <div><span class="rm-item-name">Class1 Animations</span><span class="rm-item-sub">Class Animation · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,500</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Class1 VFX">
+                    <div><span class="rm-item-name">Class1 VFX</span><span class="rm-item-sub">Class VFX · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="25" data-max="50" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Class1 SFX">
+                    <div><span class="rm-item-name">Class1 SFX</span><span class="rm-item-sub">Class SFX · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$25 – $50</span><span class="pill todo">Needed</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Boss1 -->
+              <article class="glass rm-group" data-group="Boss1" data-reveal>
+                <header class="rm-group-head">
+                  <div>
+                    <span class="rm-group-name">Regular Boss 1</span>
+                    <span class="rm-group-key">Boss1 · EarlyPrototype</span>
+                    <span class="rm-swap-tag">⇄ Temp store asset OK</span>
+                  </div>
+                  <div class="rm-group-tot">
+                    <span class="rm-group-range" data-group-range>$1,275 – $3,050</span>
+                    <span class="rm-group-label" data-group-count>4 items</span>
+                  </div>
+                </header>
+                <div class="rm-items">
+                  <div class="rm-item" data-min="250" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss1 Character Model">
+                    <div><span class="rm-item-name">Boss Character Model</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$250 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss1 VFX">
+                    <div><span class="rm-item-name">Boss VFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="25" data-max="50" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss1 SFX">
+                    <div><span class="rm-item-name">Boss SFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$25 – $50</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss1 Animation">
+                    <div><span class="rm-item-name">Boss Animation</span><span class="rm-item-sub">Normal · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Boss2 -->
+              <article class="glass rm-group" data-group="Boss2" data-reveal>
+                <header class="rm-group-head">
+                  <div>
+                    <span class="rm-group-name">Regular Boss 2</span>
+                    <span class="rm-group-key">Boss2 · EarlyPrototype</span>
+                    <span class="rm-swap-tag">⇄ Temp store asset OK</span>
+                  </div>
+                  <div class="rm-group-tot">
+                    <span class="rm-group-range" data-group-range>$1,275 – $3,050</span>
+                    <span class="rm-group-label" data-group-count>4 items</span>
+                  </div>
+                </header>
+                <div class="rm-items">
+                  <div class="rm-item" data-min="250" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss2 Character Model">
+                    <div><span class="rm-item-name">Boss Character Model</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$250 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss2 VFX">
+                    <div><span class="rm-item-name">Boss VFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="25" data-max="50" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss2 SFX">
+                    <div><span class="rm-item-name">Boss SFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$25 – $50</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss2 Animation">
+                    <div><span class="rm-item-name">Boss Animation</span><span class="rm-item-sub">Normal · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Boss3 -->
+              <article class="glass rm-group" data-group="Boss3" data-reveal>
+                <header class="rm-group-head">
+                  <div>
+                    <span class="rm-group-name">Regular Boss 3</span>
+                    <span class="rm-group-key">Boss3 · EarlyPrototype</span>
+                    <span class="rm-swap-tag">⇄ Temp store asset OK</span>
+                  </div>
+                  <div class="rm-group-tot">
+                    <span class="rm-group-range" data-group-range>$1,275 – $3,050</span>
+                    <span class="rm-group-label" data-group-count>4 items</span>
+                  </div>
+                </header>
+                <div class="rm-items">
+                  <div class="rm-item" data-min="250" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss3 Character Model">
+                    <div><span class="rm-item-name">Boss Character Model</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$250 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss3 VFX">
+                    <div><span class="rm-item-name">Boss VFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="25" data-max="50" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss3 SFX">
+                    <div><span class="rm-item-name">Boss SFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$25 – $50</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Boss3 Animation">
+                    <div><span class="rm-item-name">Boss Animation</span><span class="rm-item-sub">Normal · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- AreaBoss1 -->
+              <article class="glass rm-group" data-group="AreaBoss1" data-reveal>
+                <header class="rm-group-head">
+                  <div>
+                    <span class="rm-group-name">Area Boss 1</span>
+                    <span class="rm-group-key">AreaBoss1 · EarlyPrototype</span>
+                  </div>
+                  <div class="rm-group-tot">
+                    <span class="rm-group-range" data-group-range>$1,275 – $3,050</span>
+                    <span class="rm-group-label" data-group-count>4 items</span>
+                  </div>
+                </header>
+                <div class="rm-items">
+                  <div class="rm-item" data-min="250" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Area Boss Character Model">
+                    <div><span class="rm-item-name">Boss Character Model</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$250 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Area Boss VFX">
+                    <div><span class="rm-item-name">Boss VFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="25" data-max="50" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Area Boss SFX">
+                    <div><span class="rm-item-name">Boss SFX</span><span class="rm-item-sub">Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$25 – $50</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Area Boss Animation">
+                    <div><span class="rm-item-name">Boss Animation</span><span class="rm-item-sub">Normal · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Music -->
+              <article class="glass rm-group" data-group="Music" data-reveal>
+                <header class="rm-group-head">
+                  <div>
+                    <span class="rm-group-name">Music</span>
+                    <span class="rm-group-key">[EP] Music · EarlyPrototype</span>
+                  </div>
+                  <div class="rm-group-tot">
+                    <span class="rm-group-range" data-group-range>$500 – $1,000</span>
+                    <span class="rm-group-label" data-group-count>2 items</span>
+                  </div>
+                </header>
+                <div class="rm-items">
+                  <div class="rm-item" data-min="250" data-max="500" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Generic Boss Track">
+                    <div><span class="rm-item-name">Generic Boss Track</span><span class="rm-item-sub">Boss Track · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$250 – $500</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="250" data-max="500" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Area Boss Track">
+                    <div><span class="rm-item-name">Area Boss Track</span><span class="rm-item-sub">Boss Track · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$250 – $500</span><span class="pill todo">Needed</span></div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Environment Art -->
+              <article class="glass rm-group" data-group="EnvArt" data-reveal>
+                <header class="rm-group-head">
+                  <div>
+                    <span class="rm-group-name">Environment Art</span>
+                    <span class="rm-group-key">[EP] Environment Art · EarlyPrototype</span>
+                  </div>
+                  <div class="rm-group-tot">
+                    <span class="rm-group-range" data-group-range>$1,800 – $3,600</span>
+                    <span class="rm-group-label" data-group-count>4 items</span>
+                  </div>
+                </header>
+                <div class="rm-items">
+                  <div class="rm-item" data-min="500" data-max="1000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Generic Boss Map 1">
+                    <div><span class="rm-item-name">Generic Boss Map 1</span><span class="rm-item-sub">Boss Map (Normal) · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$500 – $1,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="1000" data-max="2000" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Area Boss Map 1">
+                    <div><span class="rm-item-name">Area Boss Map 1</span><span class="rm-item-sub">Boss Map (Area) · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$1,000 – $2,000</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="150" data-max="300" data-status="Needed">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Generic Boss Map 1 Concept">
+                    <div><span class="rm-item-name">Generic Boss Map 1 Concept</span><span class="rm-item-sub">Concept Art · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$150 – $300</span><span class="pill todo">Needed</span></div>
+                  </div>
+                  <div class="rm-item" data-min="150" data-max="300" data-status="Acquired">
+                    <input class="rm-ex" type="checkbox" aria-label="Exclude Area Boss Map 1 Concept">
+                    <div><span class="rm-item-name">Area Boss Map 1 Concept</span><span class="rm-item-sub">Concept Art · Qty 1</span></div>
+                    <div class="rm-item-meta"><span class="rm-item-price">$150 – $300</span><span class="pill acquired">✓ Acquired</span></div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+
+            <p class="rm-note-line" data-reveal style="margin-top:1.4rem;">
+              <strong>Milestone:</strong> all 26 items belong to the <strong>Early Prototype</strong>.
+              Totals are computed from each item&rsquo;s min–max range; Early Prototype Total = Grand Total =
+              <strong>$8,475 – $19,450</strong>. Costs can be cut by filling the <strong>Class</strong> and
+              <strong>Regular Boss</strong> groups with temporary Asset Store assets — the goal is proving the game loop.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <img class="footer-logo" src="Plumeria_Studio_Logo_Isolated.png" alt="Plumeria Studio">
+            <div>
+              <strong>Plumeria Studio</strong>
+              <small>ProjectRush · Confidential roadmap</small>
+            </div>
+          </div>
+          <a href="index.html">↩ Back to Home</a>
+        </div>
+      </footer>
+    </div><!-- /#site -->
+
+    <!-- ===================== PASSWORD GATE ===================== -->
+    <div class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <div class="gate-card" id="gate-card">
+        <img class="gate-logo" src="Plumeria_Studio_Logo_Transparent.png" alt="Plumeria Studio">
+        <span class="eyebrow">Confidential</span>
+        <h1 id="gate-title" class="gate-title glow-gold">Studio Roadmap</h1>
+        <p class="gate-text">This page is private. Enter the password to view the studio plan, funding roadmap, and prototype budget.</p>
+        <form class="gate-form" id="gate-form" autocomplete="off">
+          <input class="gate-input" id="gate-input" type="password" name="pw" placeholder="Password" aria-label="Password" autocomplete="off" spellcheck="false" autofocus>
+          <button class="btn btn-primary" type="submit">Unlock</button>
+        </form>
+        <p class="gate-error" id="gate-error" role="alert" hidden>Incorrect password — try again.</p>
+        <noscript><p class="gate-error" hidden="false" style="display:block;">JavaScript is required to view this page.</p></noscript>
+        <p class="gate-hint">Plumeria Studio · Internal</p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Page-specific: password gate + live budget what-if -->
+    <script>
+      (function () {
+        "use strict";
+
+        /* ---------- Password gate ----------
+           Client-side gating only — this is a static page, so it keeps casual
+           visitors out, not a determined source-reader. The password is not
+           written in pl-text here; it is base64-encoded to avoid a trivial
+           grep, and never stored (only an "unlocked" session flag is). */
+        var PASS = atob("dG9wa2Vr"); // "topkek"
+        var html = document.documentElement;
+        var gateForm = document.getElementById("gate-form");
+        var gateInput = document.getElementById("gate-input");
+        var gateError = document.getElementById("gate-error");
+        var gateCard = document.getElementById("gate-card");
+        var site = document.getElementById("site");
+
+        function unlock(animate) {
+          html.classList.remove("locked");
+          try { sessionStorage.setItem("pr_roadmap_unlocked", "1"); } catch (e) {}
+          if (animate && site) {
+            site.classList.add("entering");
+            site.addEventListener("animationend", function () {
+              site.classList.remove("entering");
+            }, { once: true });
+          }
+        }
+
+        if (gateForm) {
+          gateForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (gateInput.value === PASS) {
+              gateError.hidden = true;
+              unlock(true);
+              gateInput.value = "";
+            } else {
+              gateError.hidden = false;
+              gateCard.classList.remove("shake");
+              // reflow to restart the animation
+              void gateCard.offsetWidth;
+              gateCard.classList.add("shake");
+              gateInput.select();
+            }
+          });
+        }
+
+        // Focus the input when the gate is showing.
+        if (html.classList.contains("locked") && gateInput) {
+          gateInput.focus();
+        }
+
+        /* ---------- Live budget what-if ---------- */
+        var fmt = function (n) { return "$" + Math.round(n).toLocaleString("en-US"); };
+        var range = function (a, b) { return fmt(a) + " – " + fmt(b); };
+
+        var items = Array.prototype.slice.call(document.querySelectorAll(".rm-item"));
+        var groups = Array.prototype.slice.call(document.querySelectorAll(".rm-group"));
+        var bars = Array.prototype.slice.call(document.querySelectorAll(".rm-bar[data-bar], .rm-bar-row[data-bar]"));
+
+        var el = function (id) { return document.getElementById(id); };
+
+        function recompute() {
+          var tMin = 0, tMax = 0, tCount = 0;
+          var aMin = 0, aMax = 0, aCount = 0;   // acquired
+          var nMin = 0, nMax = 0, nCount = 0;   // needed
+          var excluded = 0;
+          var groupSums = {}; // key -> {min,max,count}
+
+          items.forEach(function (item) {
+            var excludedEl = item.querySelector(".rm-ex");
+            var isExcluded = excludedEl && excludedEl.checked;
+            item.classList.toggle("is-excluded", !!isExcluded);
+            if (isExcluded) { excluded++; return; }
+
+            var min = parseFloat(item.getAttribute("data-min")) || 0;
+            var max = parseFloat(item.getAttribute("data-max")) || 0;
+            var status = item.getAttribute("data-status");
+            var groupCard = item.closest(".rm-group");
+            var gkey = groupCard ? groupCard.getAttribute("data-group") : "_";
+
+            tMin += min; tMax += max; tCount++;
+            if (status === "Acquired") { aMin += min; aMax += max; aCount++; }
+            else { nMin += min; nMax += max; nCount++; }
+
+            if (!groupSums[gkey]) groupSums[gkey] = { min: 0, max: 0, count: 0 };
+            groupSums[gkey].min += min;
+            groupSums[gkey].max += max;
+            groupSums[gkey].count++;
+          });
+
+          // Summary cards
+          el("stat-total-range").textContent = range(tMin, tMax);
+          el("stat-total-count").textContent = tCount;
+          el("stat-acq-range").textContent = range(aMin, aMax);
+          el("stat-acq-count").textContent = aCount;
+          el("stat-rem-range").textContent = range(tMin - aMin, tMax - aMax);
+          el("stat-rem-count").textContent = tCount - aCount;
+
+          var pct = tCount ? Math.round((aCount / tCount) * 100) : 0;
+          el("stat-prog").textContent = pct + "%";
+          el("stat-prog-detail").textContent = aCount + " of " + tCount + " acquired";
+
+          // Progress bar
+          el("prog-count").textContent = aCount + " / " + tCount + " done";
+          el("prog-fill").style.setProperty("--p", pct + "%");
+          el("prog-bar").setAttribute("aria-valuenow", String(pct));
+
+          // By status
+          el("st-needed-range").textContent = range(nMin, nMax);
+          el("st-needed-count").textContent = nCount + (nCount === 1 ? " item" : " items");
+          el("st-acq-range").textContent = range(aMin, aMax);
+          el("st-acq-count").textContent = aCount + (aCount === 1 ? " item" : " items");
+
+          // Excluded note
+          el("excluded-count").textContent = excluded;
+          el("excluded-word").textContent = excluded === 1 ? "item" : "items";
+
+          // Group card ranges + counts
+          groups.forEach(function (g) {
+            var key = g.getAttribute("data-group");
+            var sum = groupSums[key] || { min: 0, max: 0, count: 0 };
+            var rangeEl = g.querySelector("[data-group-range]");
+            var countEl = g.querySelector("[data-group-count]");
+            if (rangeEl) rangeEl.textContent = range(sum.min, sum.max);
+            if (countEl) countEl.textContent = sum.count + (sum.count === 1 ? " item" : " items");
+          });
+
+          // By-group bars — width relative to the largest group max (so it stays a chart)
+          var refMax = 1;
+          Object.keys(groupSums).forEach(function (k) { if (groupSums[k].max > refMax) refMax = groupSums[k].max; });
+          bars.forEach(function (bar) {
+            var key = bar.getAttribute("data-bar");
+            var sum = groupSums[key] || { min: 0, max: 0 };
+            var fill = bar.querySelector(".rm-bar-fill");
+            var valEl = bar.querySelector(".rm-bar-val");
+            if (fill) fill.style.setProperty("--p", ((sum.max / refMax) * 100).toFixed(1) + "%");
+            if (valEl) valEl.textContent = range(sum.min, sum.max);
+          });
+        }
+
+        items.forEach(function (item) {
+          var cb = item.querySelector(".rm-ex");
+          if (cb) cb.addEventListener("change", recompute);
+        });
+
+        var resetBtn = document.getElementById("reset-exclude");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", function () {
+            items.forEach(function (item) {
+              var cb = item.querySelector(".rm-ex");
+              if (cb) cb.checked = false;
+            });
+            recompute();
+          });
+        }
+
+        // Initial sync (in case the browser restored any checkbox state).
+        recompute();
+      })();
+    </script>
+  </body>
+</html>
