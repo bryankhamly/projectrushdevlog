@@ -833,6 +833,8 @@ p, h1, h2, h3, h4 { margin: 0; }
 
 .role-card .tile-title { margin-top: 1.1rem; }
 
+.roles-apply { display: flex; justify-content: center; margin-top: 2.5rem; }
+
 /* Note alert */
 .note {
   display: flex;
